@@ -1,12 +1,31 @@
 import "./App.css";
 import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import shoes from "./data";
 import Card from "./Card";
 import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail";
+import axios from "axios";
 
 function App() {
+  const [data, setData] = useState(shoes);
+  const [inventory, setInventory] = useState([10, 11, 12]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  const test = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://codingapple1.github.io/shop/data2.json"
+      );
+      setData((prev) => [...prev, ...data]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -51,14 +70,21 @@ function App() {
           </div>
           <div className="container_main">
             <div className="row">
-              {shoes.map((shoe, i) => {
-                return <Card shoes={shoes[i]} index={i} key={i} />;
+              {data.map((shoe, idx) => {
+                return <Card shoes={shoe} index={idx} key={idx} />;
               })}
             </div>
+            <button className="btn btn-primary" onClick={test}>
+              더보기
+            </button>
           </div>
         </Route>
         <Route path={`/detail/:id`}>
-          <Detail shoes={shoes} />
+          <Detail
+            shoes={shoes}
+            inventory={inventory}
+            setInventory={setInventory}
+          />
         </Route>
 
         <Route path="/:id">

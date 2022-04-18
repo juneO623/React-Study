@@ -4,7 +4,7 @@ const Card = (props) => {
       <img
         className="shoes_image"
         src={`https://codingapple1.github.io/shop/shoes${props.index + 1}.jpg`}
-        alt="shoes1"
+        alt={`shoes${props.index + 1}`}
       />
       <h4>{props.shoes.title}</h4>
       <p>
