@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import "./Detail.scss";
+import "../Detail.scss";
 import axios from "axios";
-import Info from "./Inventory";
+import Info from "../Inventory";
+
+import { CSSTransition } from "react-transition-group";
+
+import { Nav } from "react-bootstrap";
 
 const Box = styled.div`
   padding: 20px;
@@ -29,6 +33,8 @@ const Detail = (props) => {
   const [inventory, setInventory] = useState(props.inventory[parseInt(id)]);
   const [alert, setAlert] = useState(true);
   const [inputData, setInputData] = useState("");
+  const [tabUi, setTabUi] = useState(0);
+  const [switchButton, setSwitchButton] = useState(false);
 
   const history = useHistory();
 
@@ -57,14 +63,12 @@ const Detail = (props) => {
         <Title 색={"blue"}>상세페이지</Title>
         <Title className="red">Detail</Title>
       </Box>
-
       {inputData}
       <input
         onChange={(event) => {
           setInputData(event.target.value);
         }}
       />
-
       {alert && (
         <div className="my-alert2">
           <p>재고가 얼마 남지 않았습니다</p>
@@ -75,7 +79,6 @@ const Detail = (props) => {
           <p>재고가 얼마 남지 않았습니다</p>
         </div>
       ) : null} */}
-
       <div className="row">
         <div className="col-md-6">
           <img
@@ -111,8 +114,50 @@ const Detail = (props) => {
           </button>
         </div>
       </div>
+      <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link-0"
+            onClick={() => {
+              setSwitchButton(false);
+              setTabUi(0);
+            }}
+          >
+            상품설명
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link-1"
+            onClick={() => {
+              setSwitchButton(false);
+              setTabUi(1);
+            }}
+          >
+            배송정보
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+      {/* in에 들어가는 값은 애니메이션을 켜는 스위치 */}
+      <CSSTransition in={switchButton} classNames="wow" timeout={500}>
+        <TabContent tabUi={tabUi} setSwitchButton={setSwitchButton} />
+      </CSSTransition>
     </div>
   );
+};
+
+const TabContent = (props) => {
+  useEffect(() => {
+    props.setSwitchButton(true);
+  });
+
+  if (props.tabUi === 0) {
+    return <div>0번째 내용입니다</div>;
+  } else if (props.tabUi === 1) {
+    return <div>1번째 내용입니다</div>;
+  } else if (props.tabUi === 2) {
+    return <div>2번째 내용입니다</div>;
+  }
 };
 
 export default Detail;

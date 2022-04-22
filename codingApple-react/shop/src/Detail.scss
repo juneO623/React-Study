@@ -1,5 +1,16 @@
 $mainColor: #ff0000;
 
+.wow-enter {
+  // 애니메이션 시작할 때
+  opacity: 0;
+}
+
+.wow-enter-active {
+  // 애니메이션 동작할 때
+  opacity: 1;
+  transition: all 1000ms;
+}
+
 .red {
   color: $mainColor;
 }

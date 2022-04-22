@@ -6,10 +6,40 @@ import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
 
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+const startValue = [
+  { id: 0, name: "에어 포스 1 07", quan: 5 },
+  { id: 1, name: "뉴발란스 MR530SG", quan: 0 },
+  { id: 2, name: "반스 올드스쿨", quan: 10 },
+];
+
+const reducer = (state = startValue, action) => {
+  if (action.type === "increase") {
+    const copy = [...state];
+    copy[0].quan++;
+    return copy;
+  } else if (action.type === "decrease") {
+    const copy = [...state];
+    copy[0].quan--;
+    if (copy[0].quan <= 0) {
+      copy[0].quan = 0;
+    }
+    return copy;
+  } else {
+    return state;
+  }
+};
+
+const store = createStore(reducer);
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

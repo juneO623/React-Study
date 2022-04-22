@@ -2,10 +2,13 @@ import "./App.css";
 import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import shoes from "./data";
-import Card from "./Card";
+import Card from "./components/Card";
 import { Link, Route, Switch } from "react-router-dom";
-import Detail from "./Detail";
+import Detail from "./components/Detail";
 import axios from "axios";
+import Cart from "./components/Cart";
+
+export const inventoryContext = React.createContext();
 
 function App() {
   const [data, setData] = useState(shoes);
@@ -69,11 +72,14 @@ function App() {
             <button className="learnMore_button">Learn more</button>
           </div>
           <div className="container_main">
-            <div className="row">
-              {data.map((shoe, idx) => {
-                return <Card shoes={shoe} index={idx} key={idx} />;
-              })}
-            </div>
+            <div className=""></div>
+            <inventoryContext.Provider value={inventory}>
+              <div className="row">
+                {data.map((shoe, idx) => {
+                  return <Card shoes={shoe} index={idx} key={idx} />;
+                })}
+              </div>
+            </inventoryContext.Provider>
             <button className="btn btn-primary" onClick={test}>
               더보기
             </button>
@@ -85,6 +91,10 @@ function App() {
             inventory={inventory}
             setInventory={setInventory}
           />
+        </Route>
+
+        <Route path="/cart">
+          <Cart></Cart>
         </Route>
 
         <Route path="/:id">

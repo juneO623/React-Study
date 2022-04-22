@@ -39,13 +39,13 @@
 
 .Jumbotron {
   background-color: rgb(211, 211, 211);
-  height: 150px;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 250px;
+  height: 500px;
+  width: 100%;
   padding: 30px 0 15px 0;
   background-image: url(./shoeShopBackground.jpg);
   background-size: cover;
@@ -74,4 +74,11 @@
 
 .shoes_image {
   width: 100%;
+}
+
+.tabButton {
+  width: 100px;
+  height: 30px;
+  background-color: skyblue;
+  border: 3px sold blue;
 }

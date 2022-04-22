@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { inventoryContext } from "../App";
+
 const Card = (props) => {
+  const inventory = useContext(inventoryContext);
+
   return (
     <div className="col-md-4">
       <img
@@ -10,8 +15,14 @@ const Card = (props) => {
       <p>
         {props.shoes.content} & {props.shoes.price}
       </p>
+      <Test></Test>
     </div>
   );
+};
+
+const Test = () => {
+  const inventory = useContext(inventoryContext);
+  return <p>{inventory}</p>;
 };
 
 export default Card;
