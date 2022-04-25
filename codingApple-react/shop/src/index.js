@@ -7,7 +7,18 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
+
+const alertCondition = true;
+
+function reducer2(state = alertCondition, action) {
+  if (action.type === "close") {
+    state = !state;
+  } else if (action.type === "open") {
+    state = !state;
+  }
+  return state;
+}
 
 const startValue = [
   { id: 0, name: "에어 포스 1 07", quan: 5 },
@@ -16,7 +27,11 @@ const startValue = [
 ];
 
 const reducer = (state = startValue, action) => {
-  if (action.type === "increase") {
+  if (action.type === "항목추가") {
+    const copy = [...state];
+    copy.push(action.payload);
+    return copy;
+  } else if (action.type === "increase") {
     const copy = [...state];
     copy[0].quan++;
     return copy;
@@ -32,7 +47,7 @@ const reducer = (state = startValue, action) => {
   }
 };
 
-const store = createStore(reducer);
+const store = createStore(combineReducers({ reducer, reducer2 }));
 
 ReactDOM.render(
   <React.StrictMode>

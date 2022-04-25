@@ -9,6 +9,7 @@ import Info from "../Inventory";
 import { CSSTransition } from "react-transition-group";
 
 import { Nav } from "react-bootstrap";
+import { connect } from "react-redux";
 
 const Box = styled.div`
   padding: 20px;
@@ -53,6 +54,7 @@ const Detail = (props) => {
       clearTimeout(Timer);
     };
   }, []);
+  console.log(props.state);
 
   // []가 비어있으면 처음에만 한 번 실행, [alert]면 alert가 변경될 때마다 실행
   // useEffect를 여러개 사용하고 싶다면 여러번 적으면 적은 순서대로 실행됨
@@ -98,7 +100,14 @@ const Detail = (props) => {
 
           <button
             className="btn btn-danger"
-            onClick={() => setInventory((prev) => prev - 1)}
+            onClick={() => {
+              setInventory((prev) => prev - 1);
+              props.dispatch({
+                type: "항목추가",
+                payload: { id: 3, name: "새로운상품", quan: 1 },
+              });
+              history.push("/cart");
+            }}
           >
             주문하기
           </button>
@@ -160,4 +169,11 @@ const TabContent = (props) => {
   }
 };
 
-export default Detail;
+function state를props화(state) {
+  console.log(state);
+  return { state: state.reducer, alertCondition: state.reducer2 };
+}
+
+export default connect(state를props화)(Detail);
+
+// export default Detail;

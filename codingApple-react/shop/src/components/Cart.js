@@ -62,12 +62,37 @@ const Cart = (props) => {
           </tr> */}
         </tbody>
       </Table>
+
+      {props.alertCondition && (
+        <div className="my-alert2">
+          <p>지금 구매하시면 신규할인 20%</p>
+          <button
+            onClick={() => {
+              props.dispatch({ type: "close" });
+            }}
+          >
+            X
+          </button>
+        </div>
+      )}
+      {!props.alertCondition && (
+        <div className="my-alert3">
+          <button
+            onClick={() => {
+              props.dispatch({ type: "open" });
+            }}
+          >
+            펼치기
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
 function state를props화(state) {
-  return { state: state };
+  console.log(state);
+  return { state: state.reducer, alertCondition: state.reducer2 };
 }
 
 export default connect(state를props화)(Cart);
