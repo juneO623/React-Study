@@ -1,9 +1,15 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Parent from "./Parent";
 
-const Cart = (props) => {
-  console.log(props.state);
+const Cart = () => {
+  const stateData = useSelector((state) => state);
+  console.log(stateData);
+  console.log(stateData.reducer);
+  console.log(stateData.alertState);
+  const dispatch = useDispatch();
+
   return (
     <div>
       <Table className="table" responsive>
@@ -16,9 +22,8 @@ const Cart = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.state.map((product, i) => {
-            console.log(props);
-            console.log(product);
+          {stateData.reducer.map((product, i) => {
+            // console.log(product);
             return (
               <tr key={i}>
                 <th scope="col">{product.id}</th>
@@ -27,14 +32,14 @@ const Cart = (props) => {
                 <th scope="col">
                   <button
                     onClick={() => {
-                      props.dispatch({ type: "increase" });
+                      dispatch({ type: "increase", idx: product.id });
                     }}
                   >
                     +
                   </button>
                   <button
                     onClick={() => {
-                      props.dispatch({ type: "decrease" });
+                      dispatch({ type: "decrease", idx: product.id });
                     }}
                   >
                     -
@@ -63,37 +68,38 @@ const Cart = (props) => {
         </tbody>
       </Table>
 
-      {props.alertCondition && (
+      {stateData.alertState && (
         <div className="my-alert2">
           <p>지금 구매하시면 신규할인 20%</p>
           <button
             onClick={() => {
-              props.dispatch({ type: "close" });
+              dispatch({ type: "close" });
             }}
           >
             X
           </button>
         </div>
       )}
-      {!props.alertCondition && (
-        <div className="my-alert3">
+      {!stateData.alertState && (
+        <div className="my-alert2">
           <button
             onClick={() => {
-              props.dispatch({ type: "open" });
+              dispatch({ type: "open" });
             }}
           >
             펼치기
           </button>
         </div>
       )}
+      <Parent name="John" age="20"></Parent>
     </div>
   );
 };
 
-function state를props화(state) {
-  console.log(state);
-  return { state: state.reducer, alertCondition: state.reducer2 };
-}
+// function state를props화(state) {
+//   console.log(state);
+//   return { state: state.reducer, alertCondition: state.reducer2 };
+// }
 
-export default connect(state를props화)(Cart);
-// export default Cart;
+// export default connect(state를props화)(Cart);
+export default Cart;

@@ -42,6 +42,7 @@ const Detail = (props) => {
   const correctId = props.shoes.find((shoes) => {
     return shoes.id === parseInt(id);
   });
+  console.log(correctId);
 
   useEffect(() => {
     const Timer = setTimeout(() => {
@@ -104,7 +105,11 @@ const Detail = (props) => {
               setInventory((prev) => prev - 1);
               props.dispatch({
                 type: "항목추가",
-                payload: { id: 3, name: "새로운상품", quan: 1 },
+                payload: {
+                  id: correctId.id,
+                  name: correctId.title,
+                  quan: 1,
+                },
               });
               history.push("/cart");
             }}

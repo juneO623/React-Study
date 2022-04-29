@@ -1,12 +1,16 @@
 import "./App.css";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
 import shoes from "./data";
 import Card from "./components/Card";
 import { Link, Route, Switch } from "react-router-dom";
-import Detail from "./components/Detail";
 import axios from "axios";
 import Cart from "./components/Cart";
+import Test from "./Test";
+// import Detail from "./components/Detail";
+const Detail = lazy(() => {
+  return import("./components/Detail.js");
+});
 
 export const inventoryContext = React.createContext();
 
@@ -86,15 +90,21 @@ function App() {
           </div>
         </Route>
         <Route path={`/detail/:id`}>
-          <Detail
-            shoes={shoes}
-            inventory={inventory}
-            setInventory={setInventory}
-          />
+          <Suspense fallback={<div>로딩중이에요</div>}>
+            <Detail
+              shoes={shoes}
+              inventory={inventory}
+              setInventory={setInventory}
+            />
+          </Suspense>
         </Route>
 
         <Route path="/cart">
           <Cart></Cart>
+        </Route>
+
+        <Route path="/test">
+          <Test></Test>
         </Route>
 
         <Route path="/:id">
