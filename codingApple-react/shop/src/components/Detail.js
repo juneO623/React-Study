@@ -57,6 +57,27 @@ const Detail = (props) => {
   }, []);
   console.log(props.state);
 
+  useEffect(() => {
+    var arr = localStorage.getItem("watched");
+    if (arr == null) {
+      arr = [];
+      console.log(arr);
+    } else {
+      console.log(arr);
+      arr = JSON.parse(arr);
+      console.log(arr);
+    }
+
+    arr.push(parseInt(id));
+    console.log(arr);
+    arr = new Set(arr);
+    console.log(arr);
+    arr = [...arr];
+    console.log(arr);
+
+    localStorage.setItem("watched", JSON.stringify(arr));
+  }, []);
+
   // []가 비어있으면 처음에만 한 번 실행, [alert]면 alert가 변경될 때마다 실행
   // useEffect를 여러개 사용하고 싶다면 여러번 적으면 적은 순서대로 실행됨
 

@@ -8,6 +8,7 @@ import axios from "axios";
 import Cart from "./components/Cart";
 import Test from "./Test";
 // import Detail from "./components/Detail";
+
 const Detail = lazy(() => {
   return import("./components/Detail.js");
 });
