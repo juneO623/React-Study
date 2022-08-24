@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./useState/useTabs/App";
+import App from "./useEffect/useHover/App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

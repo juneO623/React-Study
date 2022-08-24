@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTabs } from "./useTabs";
 
 const content = [
