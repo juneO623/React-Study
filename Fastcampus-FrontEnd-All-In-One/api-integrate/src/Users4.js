@@ -11,6 +11,8 @@ const Users4 = () => {
 
   const { loading, data: users, error } = state.users;
 
+  console.log(state);
+
   const fetchData = () => {
     getUsers(dispatch);
   };
