@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const User = ({ user }) => {
+const User = ({ user, onRemove, onToggle }) => {
+  const { username, email, id, active } = user;
+
+  //   useEffect(() => {
+  //     console.log("user 값이 설정됨");
+  //     console.log(user);
+  //     return () => {
+  //       console.log("user 값이 바뀌기 전");
+  //       console.log(user);
+  //     };
+  //   }, [user]);
+
   return (
     <div>
-      <b>{user.username}</b>
-      <span>{user.email}</span>
+      <b
+        style={{
+          color: active ? "green" : "black",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          onToggle(id);
+        }}
+      >
+        {username}
+      </b>
+      &nbsp;
+      <span>{email}</span>
+      <button onClick={() => onRemove(id)}>삭제</button>
     </div>
   );
 };
 
-const UserList = ({ users }) => {
+const UserList = ({ users, onRemove, onToggle }) => {
   //   const users = [
   //     {
   //       id: 1,
@@ -44,15 +67,22 @@ const UserList = ({ users }) => {
           <span>({users[2].email})</span>
         </div>
       </> */}
-      {users.map((user, idx) => {
+      {/* {users.map((user, idx) => {
         return (
           <div key={user.id}>
             <b>{user.username}</b>
             <span>{user.email}</span>
           </div>
         );
-      })}
-      {/* {users.map(user => <User user={user}/>)} */}
+      })} */}
+      {users.map((user, idx) => (
+        <User
+          user={user}
+          key={user.id}
+          onRemove={onRemove}
+          onToggle={onToggle}
+        />
+      ))}
       {/* <User user={users[0]} />
       <User user={users[1]} />
       <User user={users[2]} /> */}

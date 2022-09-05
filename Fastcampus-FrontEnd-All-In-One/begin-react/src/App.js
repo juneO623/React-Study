@@ -1,6 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import CreateUser from "./CreateUser";
 import UserList from "./UserList";
+
+const countActiveUsers = (users) => {
+  console.log("활성화 된 사용자 수를 세는 중...");
+  return users.filter((user) => user.active).length;
+};
 
 function App() {
   const [inputs, setInputs] = useState({
@@ -21,16 +26,19 @@ function App() {
       id: 1,
       username: "jun",
       email: "june0623@dgsw.hs.kr",
+      active: true,
     },
     {
       id: 2,
       username: "velopert",
       email: "public.velopert@gmail.com",
+      active: false,
     },
     {
       id: 3,
       username: "kevin",
       email: "kevin1234@gmail.com",
+      active: false,
     },
   ]);
 
@@ -57,6 +65,21 @@ function App() {
     // 값이 바뀌어도 컴포넌트가 리렌더링 되지 않음
   };
 
+  const onRemove = (id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  };
+
+  const onToggle = (id) => {
+    setUsers(
+      users.map((user) =>
+        user.id === id ? { ...user, active: !user.active } : user
+      )
+    );
+  };
+
+  // const count = countActiveUsers(users);
+  const count = useMemo(() => countActiveUsers(users), [users]);
+
   return (
     <>
       <CreateUser
@@ -65,7 +88,8 @@ function App() {
         onChange={onChange}
         onCreate={onCreate}
       />
-      <UserList users={users} />
+      <UserList users={users} onRemove={onRemove} onToggle={onToggle} />
+      <div>활성 사용자 수: {count}</div>
     </>
   );
 }
