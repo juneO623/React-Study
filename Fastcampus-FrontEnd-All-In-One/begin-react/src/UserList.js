@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const User = ({ user, onRemove, onToggle }) => {
+const User = React.memo(({ user, onRemove, onToggle }) => {
   const { username, email, id, active } = user;
 
   //   useEffect(() => {
@@ -30,7 +30,7 @@ const User = ({ user, onRemove, onToggle }) => {
       <button onClick={() => onRemove(id)}>삭제</button>
     </div>
   );
-};
+});
 
 const UserList = ({ users, onRemove, onToggle }) => {
   //   const users = [
@@ -90,4 +90,7 @@ const UserList = ({ users, onRemove, onToggle }) => {
   );
 };
 
-export default UserList;
+export default React.memo(
+  UserList,
+  (prevProps, nextProps) => nextProps.users === prevProps.users
+);
